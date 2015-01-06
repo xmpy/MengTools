@@ -1,5 +1,6 @@
 Reference a C++ Object in Java Code
 ========
+
 By using JNI (Java Native Interface), you could easily new and reference a Java object in C++ code. However, you can not new a C++ object in Java Code or return a C++ object to java. What you can do is returning the address of the C++ object [1]. This project aims to enable referencing a C++ Object in Java Code. It is inspired by this link[2] and using JNI.
 
 In the Java layer, our code is shown below. This SimpleClass in Java is a wrapper class for SimpleClass in C++. We keep the nativePtr stores the C++ object address. This C++ object is created in C++ layer and its address is returned to Java layer. So when we want to get the value of this object's int member, we need to pass this address to C++ layer. So we define` private native int getIntVal(long ptr);`. Moreover, `private native void destroyNativeSimpleClass(long nativePtr);` is responsible to delete the C++ object in C++ layer.
@@ -95,13 +96,3 @@ It is clear that after writing the Java wrapper for C++, we can operate upon a C
 	
 	
 
-zhaoxmtekiMacBook-Pro:bin zhaoxm$ java -Djava.library.path=../lib TestSimpleClass
-The address: 140467210793264
-250
-200
-The address: 0
-zhaoxmtekiMacBook-Pro:bin zhaoxm$ java -Djava.library.path=../lib TestSimpleClass
-The address: 140589752997808
-250
-200
-The address: 0
